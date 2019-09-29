@@ -108,7 +108,9 @@ var newElement = document.createElement('div');
 	newElement.id = "emojis_by_36_outer"; 
 	newElement.innerHTML = "";
 	document.body.appendChild(newElement);
-
+var nav = '';
+	nav += '<div id="emojis_by_36_btn_openclose">▼</div>';
+	nav += '';
 var btns = '';
 	btns += '<div id="emojis_by_36_inner_btn_person">person</div>';
 	btns += '<div id="emojis_by_36_inner_btn_nature">nature</div>';
@@ -116,8 +118,11 @@ var btns = '';
 	btns += '<div id="emojis_by_36_inner_btn_objects">objects</div>';
 	btns += '<div id="emojis_by_36_inner_btn_places">places</div>';
 	btns += '<div id="emojis_by_36_inner_btn_symbols">symbols</div>';
-	btns += '<div id="break" class="emoji_by_36" style="display: block; width: 100%;">linebreak</div>';
-newElement.innerHTML = '<div id="emojis_by_36_nav"><div id="emojis_by_36_btn_fontsmaller">🡻</div><div id="emojis_by_36_btn_openclose">▼</div><div id="emojis_by_36_btn_fontbigger">🡹</div></div><div id="emojis_by_36_btns">'+btns+'</div><div id="emojis_by_36_inner"></div>';
+	btns += '<div id="emojis_by_36_btn_fontbigger">+</div>';
+	btns += '<div id="emojis_by_36_btn_fontsmaller">-</div>';
+	btns += '<div id="break">linebreak</div>';
+	btns += '<div id="emojis_by_36_btn_switch">switch pos</div>';
+newElement.innerHTML = '<div id="emojis_by_36_nav">'+nav+'</div><div id="emojis_by_36_btns">'+btns+'</div><div id="emojis_by_36_inner"></div>';
 
 var wrapper = document.getElementById("emojis_by_36_outer");
 var container = document.getElementById("emojis_by_36_inner");
@@ -126,16 +131,32 @@ var btns = document.getElementById("emojis_by_36_btns");
 
 
 document.getElementById("emojis_by_36_btn_openclose").addEventListener("click", function(e){ 	
-	if (container.style.height == "0px") {
-		container.style.height = "auto";
-		container.style.padding = "5px";
-		btns.style.height = "auto";
+	if (container.style.display == "none") {
+		container.style.display = "block";
+		btns.style.display = "block";
 		document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▼";
+		if (wrapper.style.top == "0px") { document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▲"; }
 	} else {
-		container.style.height = "0px";
-		container.style.padding = "0px";
-		btns.style.height = "0px";
+		container.style.display = "none";
+		btns.style.display = "none";
 		document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▲";
+		if (wrapper.style.top == "0px") { document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▼"; }
+	}
+});
+
+document.getElementById("emojis_by_36_btn_switch").addEventListener("click", function(e){ 	
+	if (wrapper.style.top == "0px") {
+		wrapper.style.bottom = "0px";
+		wrapper.style.top = "";
+		document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▼";
+		wrapper.insertBefore(btns, container);
+		wrapper.insertBefore(nav, btns);
+	} else {
+		wrapper.style.top = "0px";
+		wrapper.style.bottom = "";
+		document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▲";
+		wrapper.insertBefore(container, nav);
+		wrapper.insertBefore(btns, nav);
 	}
 });
 
@@ -216,15 +237,15 @@ document.getElementById("emojis_by_36_inner_btn_symbols").addEventListener("clic
 });
 
 var sheet = "";
-	sheet += '#emojis_by_36_outer { z-index: 9999; transition: 0.3s; overflow: hidden; position: fixed; width: 100%; bottom: 0; color: white; font-size: 12px;}';
-	sheet += '#emojis_by_36_inner { transition: 0.3s; padding: 5px; text-align: center; background-color: rgba(0, 0, 0, 0.75); font-size: 14px; }';
+	sheet += '#emojis_by_36_outer { z-index: 9999; transition: 0.3s; overflow: hidden; position: fixed; width: 100%; color: white; font-size: 12px;}';
+	sheet += '#emojis_by_36_inner { transition: 0.3s; padding: 5px; text-align: center; background-color: rgba(0, 0, 0, 0.75); font-size: 15px; }';
 	sheet += '';
 	sheet += '#emojis_by_36_nav { transition: 0.3s; text-align: center; width: 100%; }';
 	sheet += '#emojis_by_36_nav * { display: inline-block; margin: 0 auto; text-align: center; width: 10%; padding: 5px; background-color: rgba(0, 0, 0, 0.75); }';
 	sheet += '#emojis_by_36_nav *:hover { cursor: pointer; background-color: grey; }';
 	sheet += '';
 	sheet += '#emojis_by_36_btns { transition: 0.3s; text-align: center; width: 100%; background-color: rgba(0, 0, 0, 0.75); }';
-	sheet += '#emojis_by_36_btns * { display: inline-block; margin: 0 auto; text-align: center; width: 10%; padding: 5px; }';
+	sheet += '#emojis_by_36_btns * { display: inline-block; margin: 0 auto; text-align: center; width: 5%; padding: 5px; }';
 	sheet += '#emojis_by_36_btns *:hover { cursor: pointer; background-color: grey; }';
 	sheet += '';
 	sheet += 'div[class="emoji_by_36"] {display: inline-block;}';
@@ -235,15 +256,6 @@ var sheet = "";
 var style = document.createElement('style');
 	document.body.appendChild(style);
 	style.innerHTML = sheet;
-
-
-setInterval(function() {
-	try {
-		target = document.querySelectorAll("textarea")[1];
-	} catch(e) {
-		
-	}
-}, 1000)
 
 newElement = '<div id="emojis_by_36_person" class="hiddens">';
 person.forEach(function(e) {
@@ -287,19 +299,57 @@ symbols.forEach(function(e) {
 newElement += '</div>';
 container.innerHTML += newElement; 
 
+var target;
+document.body.addEventListener("click", function(e){ 
+	//console.log(target);
+	target = document.activeElement;
+});
+
 document.getElementById("break").addEventListener("click", function(e){ 
-	target.value += "\n";
-	target.focus();
+	if (target.nodeName == "INPUT" || target.nodeName == "TEXTAREA" ) {
+		
+        var startPos = target.selectionStart;
+        var endPos = target.selectionEnd;
+		var string = target.value;
+		
+		string1 = string.substring(0, startPos);
+		string2 = string.substring(endPos, string.length);
+		
+		//console.log(string1 + "+" + string2);
+		target.value = string1+"\n"+string2;
+		
+		target.focus();
+		target.setSelectionRange(parseInt(startPos)+1, parseInt(startPos)+1)
+		
+	} else {
+		//target.innerHTML += String.fromCodePoint("0x"+e.originalTarget.id);
+	}
 });
 
 container.addEventListener("click", function(e){ 
-	target.value += String.fromCodePoint("0x"+e.originalTarget.id);
-	target.focus();
+	if (target.nodeName == "INPUT" || target.nodeName == "TEXTAREA" ) {
+		
+        var startPos = target.selectionStart;
+        var endPos = target.selectionEnd;
+		var string = target.value;
+		
+		string1 = string.substring(0, startPos);
+		string2 = string.substring(endPos, string.length);
+		
+		//console.log(string1 + "+" + string2);
+		target.value = string1+String.fromCodePoint("0x"+e.originalTarget.id)+string2;
+		
+		target.focus();
+		target.setSelectionRange(parseInt(startPos)+2, parseInt(startPos)+2)
+		
+	} else {
+		//target.innerHTML += String.fromCodePoint("0x"+e.originalTarget.id);
+	}
 });
 
-container.style.height = "0px";
-container.style.padding = "0px";
-btns.style.height = "0px";
+wrapper.style.bottom = "0px";
+container.style.display = "none";
+btns.style.display = "none";
 document.getElementById("emojis_by_36_btn_openclose").innerHTML = "▲";
 document.getElementById("emojis_by_36_person").style.display = "block";
 document.getElementById("emojis_by_36_nature").style.display = "none";

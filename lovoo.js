@@ -125,14 +125,12 @@ emojis.forEach(function(e) {
 	newElement = '<div id="'+e+'" class="emoji_by_36">'+String.fromCodePoint("0x"+e)+'</div>';
 	container.innerHTML += newElement; 
 })
-emojis.forEach(function(e) {
-	document.getElementById(e).addEventListener("click", function(e){ 
-		target.value += String.fromCodePoint("0x"+e.originalTarget.id);
-		target.focus();
-	});
-})
 document.getElementById("break").addEventListener("click", function(e){ 
 	target.value += "\n";
+	target.focus();
+});
+container.addEventListener("click", function(e){ 
+	target.value += String.fromCodePoint("0x"+e.originalTarget.id);
 	target.focus();
 });
 
@@ -157,7 +155,7 @@ document.getElementById("emojis_by_36_btn_fontsmaller").addEventListener("click"
 });
 
 var sheet = "";
-	sheet += '#emojis_by_36_outer { z-index: 9999; transition: 0.3s; overflow: hidden; position: fixed; bottom: 0; color: white;}';
+	sheet += '#emojis_by_36_outer { z-index: 9999; transition: 0.3s; overflow: hidden; position: fixed; bottom: 0; color: white; font-size: 12px;}';
 	sheet += '#emojis_by_36_inner { transition: 0.3s; text-align: center; background-color: rgba(0, 0, 0, 0.75); border-radius: 5px; }';
 	sheet += '#emojis_by_36_nav { transition: 0.3s; text-align: center; width: 100%; }';
 	sheet += '#emojis_by_36_nav * { display: inline-block; margin: 0 auto; text-align: center; width: 10%; padding: 5px; background-color: rgba(0, 0, 0, 0.75); }';

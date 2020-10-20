@@ -1,6 +1,6 @@
 { 
 	
-	"version": "1.4", 
+	"version": "1.5", 
 	"manifest_version": 2, 
 	"name": "lovoo emojis",
 	"description": "Lovoo emojis & notification for web", 	
@@ -9,7 +9,7 @@
 		"default_title": "lovoo",
 		"default_popup": "popup.html",
 		"default_icon": {
-			"48": "36.png"
+			"300": "36.png"
 		}
 	},
 	
@@ -18,7 +18,7 @@
 	],
 	
 	"icons": {
-		"48": "36.png"
+		"300": "36.png"
 	},
 	
 	"content_scripts": [ { 

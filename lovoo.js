@@ -6,8 +6,9 @@
 // // // // // // // // // // // // // // // // // // // // //
 
 //const file = "https://notificationsounds.com/soundfiles/ab817c9349cf9c4f6877e1894a1faa00/file-sounds-767-arpeggio.mp3"
-const file = "https://notificationsounds.com/soundfiles/58ae749f25eded36f486bc85feb3f0ab/file-sounds-1094-intuition.mp3"
-const audio = new Audio(file);
+//const file = "https://notificationsounds.com/soundfiles/58ae749f25eded36f486bc85feb3f0ab/file-sounds-1094-intuition.mp3";
+var file = "https://notificationsounds.com/storage/sounds/file-sounds-1148-juntos.ogg";
+var audio = new Audio(file);
 
 function play() {
 	setTimeout(function(){ 
